@@ -15,6 +15,7 @@
  */
 package org.japo.java.lib;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -150,11 +151,9 @@ public class UtilesSwing {
         ChangeListener[] lista = spnActual.getChangeListeners();
 
         /**
-         * Desactiva el primer ChangeListener para que no se 
-         * propaguen eventos.
-         * Si se desconectan todos los listeners el JSpinner 
-         * no se actualiza con el valor cambiado por set 
-         * value.
+         * Desactiva el primer ChangeListener para que no se propaguen eventos.
+         * Si se desconectan todos los listeners el JSpinner no se actualiza con
+         * el valor cambiado por set value.
          */
         spnActual.removeChangeListener(lista[0]);
 
@@ -163,5 +162,12 @@ public class UtilesSwing {
 
         // Reconecta el primer ChangeListener
         spnActual.addChangeListener(lista[0]);
+    }
+
+    // Tipografias disponibles en el sistema
+    public static String[] obtenerTipografiasSistema() {
+        return GraphicsEnvironment.
+            getLocalGraphicsEnvironment().
+            getAvailableFontFamilyNames();
     }
 }

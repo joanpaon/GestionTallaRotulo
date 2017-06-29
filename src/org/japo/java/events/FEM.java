@@ -17,7 +17,7 @@ package org.japo.java.events;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import org.japo.java.forms.GUI;
+import org.japo.java.forms.View;
 
 /**
  *
@@ -26,10 +26,10 @@ import org.japo.java.forms.GUI;
 public class FEM implements FocusListener {
 
     // Referencia al Interfaz
-    private final GUI gui;
+    private final View gui;
 
     // Constructor
-    public FEM(GUI gui) {
+    public FEM(View gui) {
         this.gui = gui;
     }
 

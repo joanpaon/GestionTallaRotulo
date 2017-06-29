@@ -17,7 +17,7 @@ package org.japo.java.events;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import org.japo.java.forms.GUI;
+import org.japo.java.forms.View;
 
 /**
  *
@@ -26,10 +26,10 @@ import org.japo.java.forms.GUI;
 public class MMEM implements MouseMotionListener {
 
     // Referencia al Interfaz
-    private final GUI gui;
+    private final View gui;
 
     // Constructor
-    public MMEM(GUI gui) {
+    public MMEM(View gui) {
         this.gui = gui;
     }
 

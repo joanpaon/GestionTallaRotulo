@@ -1,5 +1,10 @@
 <pre>
 
+Version 0.1.1 - 29/06/2017
+==========================
+> Many refactorizations, optimizations and bugs fixed
+---
+
 Version 0.1.0 - 27/06/2017
 ==========================
 

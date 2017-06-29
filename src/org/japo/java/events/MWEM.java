@@ -17,7 +17,7 @@ package org.japo.java.events;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import org.japo.java.forms.GUI;
+import org.japo.java.forms.View;
 
 /**
  *
@@ -26,10 +26,10 @@ import org.japo.java.forms.GUI;
 public class MWEM implements MouseWheelListener {
 
     // Referencia al Interfaz
-    private final GUI gui;
+    private final View gui;
 
     // Constructor
-    public MWEM(GUI gui) {
+    public MWEM(View gui) {
         this.gui = gui;
     }
 

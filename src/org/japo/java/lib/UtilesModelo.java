@@ -15,106 +15,20 @@
  */
 package org.japo.java.lib;
 
-import java.beans.XMLDecoder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.beans.XMLEncoder;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import org.japo.java.entities.Modelo;
+import java.io.Writer;
+import java.util.Properties;
+import org.japo.java.entities.Model;
 
 /**
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
 public class UtilesModelo {
-
-    // Archivo [CSV] > Modelo
-    public static void importarModeloCSV(
-        String archivo, String separador, Modelo modelo)
-        throws Exception {
-        // Lectura de un fichero de texto
-        try (BufferedReader br = new BufferedReader(
-                            new FileReader(archivo))) {
-            // Linea de texto a leer
-            String linea = br.readLine();
-
-            // Fichero > Items
-            String[] items = linea.split(separador);
-
-            // Items > Modelo
-            modelo.asignarItemsModelo(items);
-        }
-    }
-
-    // Archivo [Serialización Binaria] > Modelo
-    public static void importarModeloSBIN(
-        String archivo, Modelo modeloFin) throws Exception {
-        try (ObjectInputStream entrada = new ObjectInputStream(
-                               new FileInputStream(archivo))) {
-            // Persistencia Binaria > Modelo Temporal
-            Modelo modeloIni = (Modelo) entrada.readObject();
-
-            // Modelo Temporal > Modelo
-            modeloFin.copiarModelo(modeloIni);
-        }
-    }
-
-    // Archivo [Serialización XML] > Modelo
-    public static void importarModeloXML(
-        String ficheroDatos, Modelo modeloFin) throws Exception {
-        try (XMLDecoder entrada = new XMLDecoder(
-                        new FileInputStream(ficheroDatos))) {
-            // Persistencia Binaria > Modelo Temporal            
-            Modelo modeloIni = (Modelo) entrada.readObject();
-
-            // Modelo Temporal > Modelo
-            modeloFin.copiarModelo(modeloIni);
-        }
-    }
-
-    // Modelo > Archivo [CSV]
-    public static void exportarModeloCSV(
-        String archivo, String separador, Modelo modelo)
-        throws Exception {
-        // Lectura de un fichero de texto
-        try (PrintWriter pw = new PrintWriter(
-                         new FileWriter(archivo))) {
-            // Modelo > Items
-            String[] items = modelo.asignarModeloItems();
-
-            // Escribe el primer item por separado
-            pw.print(items[0]);
-
-            // Escribe el resto de los items
-            for (int i = 1; i < items.length; i++) {
-                pw.print(separador + items[i]);
-            }
-        }
-    }
-
-    // Modelo > Archivo [Serialización Binaria]
-    public static void exportarModeloSBIN(
-        String ficheroDatos, Modelo modelo) throws Exception {
-        try (ObjectOutputStream entrada = new ObjectOutputStream(
-                                new FileOutputStream(ficheroDatos))) {
-            // Escribe el modelo
-            entrada.writeObject(modelo);
-        }
-    }
-
-    // Modelo > Archivo [Serialización XML]
-    public static void exportarModeloXML(
-        String ficheroDatos, Modelo modelo) throws Exception {
-        try (XMLEncoder salida = new XMLEncoder(
-                        new FileOutputStream(ficheroDatos))) {
-            // Escribe el modelo
-            salida.writeObject(modelo);
-        }
-    }
 
 }

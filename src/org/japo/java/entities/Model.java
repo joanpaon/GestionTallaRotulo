@@ -22,7 +22,7 @@ import org.japo.java.lib.UtilesValidacion;
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
-public class Modelo implements Serializable {
+public class Model implements Serializable {
 
     // Número de items
     public static final int NUM_ITEMS = 11;
@@ -80,7 +80,7 @@ public class Modelo implements Serializable {
     private int fondoA;
 
     // Constructor Predeterminado
-    public Modelo() {
+    public Model() {
         texto = DEF_TEXTO;
         familia = DEF_FAMILIA;
         negrita = DEF_NEGRITA;
@@ -95,7 +95,7 @@ public class Modelo implements Serializable {
     }
 
     // Constructor Parametrizado
-    public Modelo(String texto, String familia,
+    public Model(String texto, String familia,
                   boolean negrita, boolean cursiva, int talla,
                   int frenteR, int frenteV, int frenteA,
                   int fondoR, int fondoV, int fondoA) {
@@ -279,94 +279,4 @@ public class Modelo implements Serializable {
     }
 
     // --- FIN SETTERS / GETTERS
-    //
-    // Items > Modelo
-    public void asignarItemsModelo(String[] items) throws Exception {
-        // Texto
-        setTexto(items[POS_TEXTO]);
-
-        // Familia
-        setFamilia(items[POS_FAMILIA]);
-
-        // Estilo
-        setNegrita(items[POS_NEGRITA].toLowerCase().equals("true"));
-        setCursiva(items[POS_CURSIVA].toLowerCase().equals("true"));
-
-        // Talla
-        try {
-            setTalla(Integer.parseInt(items[POS_TALLA]));
-        } catch (NumberFormatException e) {
-            setTalla(DEF_TALLA);
-        }
-
-        // Frente
-        try {
-            setFrenteR(Integer.parseInt(items[POS_FRENTE_R]));
-            setFrenteV(Integer.parseInt(items[POS_FRENTE_V]));
-            setFrenteA(Integer.parseInt(items[POS_FRENTE_A]));
-        } catch (NumberFormatException e) {
-            setFrenteR(DEF_FRENTE_R);
-            setFrenteV(DEF_FRENTE_V);
-            setFrenteA(DEF_FRENTE_A);
-        }
-
-        // Fondo
-        try {
-            setFondoR(Integer.parseInt(items[POS_FONDO_R]));
-            setFondoV(Integer.parseInt(items[POS_FONDO_V]));
-            setFondoA(Integer.parseInt(items[POS_FONDO_A]));
-        } catch (NumberFormatException e) {
-            setFondoR(DEF_FONDO_R);
-            setFondoV(DEF_FONDO_V);
-            setFondoA(DEF_FONDO_A);
-        }
-    }
-
-    // Modelo > Items
-    public String[] asignarModeloItems() {
-        // Lista vacía
-        String[] items = new String[NUM_ITEMS];
-
-        // Items > Lista
-        items[POS_TEXTO] = getTexto();
-        items[POS_FAMILIA] = getFamilia();
-        items[POS_NEGRITA] = isNegrita() + "";
-        items[POS_CURSIVA] = isCursiva() + "";
-        items[POS_TALLA] = getTalla() + "";
-        items[POS_FRENTE_R] = getFrenteR() + "";
-        items[POS_FRENTE_V] = getFrenteV() + "";
-        items[POS_FRENTE_A] = getFrenteA() + "";
-        items[POS_FONDO_R] = getFondoR() + "";
-        items[POS_FONDO_V] = getFondoV() + "";
-        items[POS_FONDO_A] = getFondoA() + "";
-
-        // Devuelve Lista
-        return items;
-    }
-
-    // Duplica Estado Modelo
-    public void copiarModelo(Modelo modelo) {
-        // Texto
-        setTexto(modelo.getTexto());
-        
-        // Familia
-        setFamilia(modelo.getFamilia());
-        
-        // Estilo
-        setNegrita(modelo.isNegrita());
-        setCursiva(modelo.isCursiva());
-        
-        // Tamaño
-        setTalla(modelo.getTalla());
-        
-        // Color Frente
-        setFrenteR(modelo.getFrenteR());
-        setFrenteV(modelo.getFrenteV());
-        setFrenteA(modelo.getFrenteA());
-
-        // Color Fondo
-        setFondoR(modelo.getFondoR());
-        setFondoV(modelo.getFondoV());
-        setFondoA(modelo.getFondoA());
-    }
 }

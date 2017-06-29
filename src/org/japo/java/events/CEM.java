@@ -17,7 +17,7 @@ package org.japo.java.events;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.japo.java.forms.GUI;
+import org.japo.java.forms.View;
 
 /**
  *
@@ -26,10 +26,10 @@ import org.japo.java.forms.GUI;
 public class CEM implements ChangeListener {
 
     // Referencia al Interfaz
-    private final GUI gui;
+    private final View gui;
 
     // Constructor
-    public CEM(GUI gui) {
+    public CEM(View gui) {
         this.gui = gui;
     }
 
