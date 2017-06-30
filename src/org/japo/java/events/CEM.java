@@ -17,7 +17,7 @@ package org.japo.java.events;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.japo.java.forms.View;
+import org.japo.java.controllers.Controller;
 
 /**
  *
@@ -25,17 +25,17 @@ import org.japo.java.forms.View;
  */
 public class CEM implements ChangeListener {
 
-    // Referencia al Interfaz
-    private final View gui;
+    // Referencia al Controller
+    private final Controller control;
 
     // Constructor
-    public CEM(View gui) {
-        this.gui = gui;
+    public CEM(Controller control) {
+        this.control = control;
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        // gui.procesarCambio(e);
+        // control.procesarCambio(e);
     }
 
 }

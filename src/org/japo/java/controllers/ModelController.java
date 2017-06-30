@@ -17,20 +17,13 @@ package org.japo.java.controllers;
 
 import java.util.Properties;
 import org.japo.java.entities.Model;
+import org.japo.java.forms.View;
 
 /**
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
 public class ModelController {
-
-    // Referencias
-    private final Controller control;
-
-    // Constructor Parametrizado
-    public ModelController(Controller control) {
-        this.control = control;
-    }
 
     // Items > Modelo
     public void asignarItemsModelo(String[] items, Model model) throws Exception {
@@ -171,5 +164,26 @@ public class ModelController {
         prp.setProperty("rotulo.fondo_r", model.getFondoR() + "");
         prp.setProperty("rotulo.fondo_v", model.getFondoV() + "");
         prp.setProperty("rotulo.fondo_a", model.getFondoA() + "");
+    }
+
+    // Validar Controles Subjetivos
+    public boolean comprobarValidez(View view) {
+        // Validación Individual
+//        boolean item1OK = UtilesValidacion.validarCampoTexto(view.txfItem1, Modelo.ER_ITEM1, "*");
+//        boolean item2OK = UtilesValidacion.validarCampoTexto(view.txfItem2, Modelo.ER_ITEM2, "*");
+//        boolean item4OK = UtilesValidacion.validarCampoFecha(view.txfItem4, "*");
+//        boolean item5OK = UtilesValidacion.validarCampoTexto(view.txfItem5, Modelo.ER_ITEM5, "*");
+
+        // Validación Conjunta
+//        return item1OK && item2OK && item4OK && item5OK;
+        return true;
+    }
+
+    // Estado Actual > Persistencia
+    public void memorizarEstadoApp(Properties prpApp) {
+        // Actualiza Propiedades Estado Actual
+
+        // Guardar Estado Actual
+        // UtilesApp.guardarPropiedades(prpApp);
     }
 }

@@ -17,7 +17,12 @@ package org.japo.java.controllers;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import java.util.Properties;
+import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.DocumentEvent;
 import org.japo.java.entities.Model;
 import org.japo.java.forms.View;
 import org.japo.java.lib.UtilesApp;
@@ -36,7 +41,6 @@ public class Controller {
     private final Model model;
     private final ModelController modelControl;
     private final IDAController daControl;
-    private final EventsController eventsControl;
 
     // Constructor Parametrizado
     public Controller(Model model, View view) {
@@ -47,15 +51,13 @@ public class Controller {
         this.prpApp = UtilesApp.cargarPropiedades();
 
         // Controlador de Modelo
-        this.modelControl = new ModelController(this);
+        this.modelControl = new ModelController();
 
         // *** Controlador de Persistencia ***
         this.daControl = new DAControllerSXML(modelControl);
-
-        // Controlador de Eventos
-        this.eventsControl = new EventsController(this);
     }
 
+    // --- INICIO SETTERS / GETTERS ----
     public View getView() {
         return view;
     }
@@ -76,20 +78,23 @@ public class Controller {
         return daControl;
     }
 
-    public EventsController getEventsControl() {
-        return eventsControl;
-    }
+    // --- FIN SETTERS / GETTERS ----
+    //
+    // Persistencia > Estado Actual
+    public void restaurarEstadoApp() {
+        // Establece Lnf
+        UtilesSwing.establecerLnF(prpApp.getProperty("lnf", UtilesSwing.WINDOWS));
 
-    // Estado Actual > Persistencia
-    public void memorizarEstadoApp() {
-        // Actualiza Propiedades Estado Actual
+        // Activa Singleton
+        if (!UtilesApp.activarInstancia(prpApp.getProperty("puerto_bloqueo", UtilesApp.PUERTO_BLOQUEO))) {
+            UtilesSwing.terminarPrograma(view);
+        }
 
-        // Guardar Estado Actual
-        // UtilesApp.guardarPropiedades(prpApp);
+        // Activa otras propiedades
     }
 
     // Interfaz (Subjetivo) > Modelo
-    public void sincronizarVistaModelo() {
+    public void sincronizarVistaModelo(Model model, View view) {
 //        // Campo de Texto - Item 
 //        if (UtilesValidacion.validarDato(
 //            view.txfItem.getText(), Model.ER_ITEM)) {
@@ -100,13 +105,18 @@ public class Controller {
     }
 
     // Modelo > Interfaz 
-    public void sincronizarModeloVista() {
+    public void sincronizarModeloVista(Model model, View view) {
         // Texto
         view.lblRotulo.setText(model.getTexto());
+//        view.txfTexto.setText(model.getTexto());
 
-        // Estilo
+//        // Tipografia
+//        UtilesSwing.seleccionarElementoCombo(view.cbbFamilia, model.getFamilia());
+//
+//        // Estilo
 //        view.cbxNegrita.setSelected(model.isNegrita());
 //        view.cbxCursiva.setSelected(model.isCursiva());
+//
         // Talla
         UtilesSwing.ajustarValorDeslizador(view.sldTalla, model.getTalla());
         UtilesSwing.ajustarValorCambiador(view.spnTalla, model.getTalla());
@@ -162,30 +172,142 @@ public class Controller {
 //        }
     }
 
-    // Validar Controles Subjetivos
-    public boolean comprobarValidez() {
-        // Validación Individual
-//        boolean item1OK = UtilesValidacion.validarCampoTexto(txfItem1, Modelo.ER_ITEM1, "*");
-//        boolean item2OK = UtilesValidacion.validarCampoTexto(txfItem2, Modelo.ER_ITEM2, "*");
-//        boolean item4OK = UtilesValidacion.validarCampoFecha(txfItem4, "*");
-//        boolean item5OK = UtilesValidacion.validarCampoTexto(txfItem5, Modelo.ER_ITEM5, "*");
-
-        // Validación Conjunta
-//        return item1OK && item2OK && item4OK && item5OK;
-        return true;
+    // Iniciado Cierre Ventana
+    public void procesarCierreVentana(WindowEvent evt) {
+        // Memorizar Estado de la Applicación
+        modelControl.memorizarEstadoApp(prpApp);
     }
 
-    // Persistencia > Estado Actual
-    public void restaurarEstadoApp() {
-        // Establece Lnf
-        UtilesSwing.establecerLnF(getPrpApp().getProperty("lnf", UtilesSwing.WINDOWS));
+    // Persistencia > Modelo > Interfaz
+    public void procesarImportacion(ActionEvent evt) {
+        try {
+            // Fichero de Datos
+            String fichero = prpApp.getProperty("fichero_datos");
 
-        // Activa Singleton
-        if (!UtilesApp.activarInstancia(prpApp.getProperty("puerto_bloqueo", UtilesApp.PUERTO_BLOQUEO))) {
-            UtilesSwing.terminarPrograma(view);
+            // Persistencia > Modelo
+            daControl.importarModelo(model, fichero);
+
+            // Modelo > Interfaz
+            sincronizarModeloVista(model, view);
+
+            // Validar Datos Cargados > Interfaz
+            modelControl.comprobarValidez(view);
+
+            // Mensaje - Importación OK
+            String msg = "Datos cargados correctamente";
+            JOptionPane.showMessageDialog(view, msg);
+        } catch (Exception e) {
+            // Mensaje - Importación NO
+            String msg = "Error al cargar los datos";
+            JOptionPane.showMessageDialog(view, msg);
+        }
+    }
+
+    // Interfaz > Modelo > Persistencia
+    public void procesarExportacion(ActionEvent evt) {
+        // Validar Datos Interfaz
+        if (modelControl.comprobarValidez(view)) {
+            try {
+                // Interfaz > Modelo
+                sincronizarVistaModelo(model, view);
+
+                // Fichero de Datos
+                String fichero = prpApp.getProperty("fichero_datos");
+
+                // Modelo > Persistencia
+                daControl.exportarModelo(model, fichero);
+
+                // Mensaje - Exportación OK
+                String msg = "Datos guardados correctamente";
+                JOptionPane.showMessageDialog(view, msg);
+            } catch (Exception e) {
+                // Mensaje - Exportación NO
+                String msg = "Error al guardar los datos";
+                JOptionPane.showMessageDialog(view, msg);
+            }
+        } else {
+            // Mensaje - Validación Pendiente
+            JOptionPane.showMessageDialog(view, "Hay datos erróneos.");
+        }
+    }
+
+    // Procesar cambio de Texto
+    public void procesarCambioTexto(DocumentEvent e) {
+//        // Campo de Texto > Modelo
+//        model.setTexto(view.txfTexto.getText());
+//
+//        // Campo de Texto > Etiqueta
+//        view.lblRotulo.setText(view.txfTexto.getText());
+    }
+
+    // Cambiar Familia Tipográfica
+    public void procesarCambioTipografia(ActionEvent evt) {
+//        // Vista > Modelo
+//        model.setFamilia((String) view.cbbFamilia.getSelectedItem());
+//
+//        // Modelo > Vista
+//        sincronizarModeloVista(model, view);
+    }
+
+    // Activar/Desactivar Estilo Negrita
+    public void procesarNegrita(ActionEvent evt) {
+//        // Vista > Modelo
+//        model.setNegrita(view.cbxNegrita.isSelected());
+//        
+//        // Modelo > Vista
+//        sincronizarModeloVista(model, view);
+    }
+
+    // Activar/Desactivar Estilo Cursiva
+    public void procesarCursiva(ActionEvent evt) {
+//        // Vista > Modelo
+//        model.setCursiva(view.cbxCursiva.isSelected());
+//
+//        // Modelo > Vista
+//        sincronizarModeloVista(model, view);
+    }
+
+    // Cambiar Tamaño de Fuente
+    public void procesarTalla(ChangeEvent evt) {
+        // Vista > Modelo
+        if (evt.getSource().equals(view.sldTalla)) {
+            model.setTalla(view.sldTalla.getValue());
+        } else {
+            model.setTalla((int) view.spnTalla.getValue());
         }
 
-        // Activa otras propiedades
+        // Modelo > Vista
+        sincronizarModeloVista(model, view);
     }
 
+    // Cambiar Componente Color
+    public void procesarAjusteColor(ChangeEvent evt) {
+//        // Vista > Modelo
+//        if (view.rbtFrente.isSelected()) {
+//            if (evt.getSource().equals(view.sldRojo)) {
+//                model.setFrenteR(view.sldRojo.getValue());
+//            } else if (evt.getSource().equals(view.sldVerde)) {
+//                model.setFrenteV(view.sldVerde.getValue());
+//            } else {
+//                model.setFrenteA(view.sldAzul.getValue());
+//            }
+//        } else {
+//            if (evt.getSource().equals(view.sldRojo)) {
+//                model.setFondoR(view.sldRojo.getValue());
+//            } else if (evt.getSource().equals(view.sldVerde)) {
+//                model.setFondoV(view.sldVerde.getValue());
+//            } else {
+//                model.setFondoA(view.sldAzul.getValue());
+//            }
+//        }
+//
+//        // Modelo > Vista
+//        sincronizarModeloVista(model, view);
+    }
+
+    // Cambiar Frente/Fondo
+    public void procesarCambioFrenteFondo(ActionEvent evt) {
+        // Modelo > Vista
+        sincronizarModeloVista(model, view);
+    }
 }

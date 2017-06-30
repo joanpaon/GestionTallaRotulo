@@ -25,9 +25,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -169,5 +171,23 @@ public class UtilesSwing {
         return GraphicsEnvironment.
             getLocalGraphicsEnvironment().
             getAvailableFontFamilyNames();
+    }
+
+    public static void seleccionarElementoCombo(JComboBox<String> cbbActual, String item) {
+        // Captura los escuchadores del combo
+        ActionListener[] lista = cbbActual.getActionListeners();
+
+        // Desactiva los escuchadores del deslizador
+        for (ActionListener al : lista) {
+            cbbActual.removeActionListener(al);
+        }
+
+        // Selecciona el elemento
+        cbbActual.setSelectedItem(item);
+
+        // Asocia los escuchadores al combo
+        for (ActionListener al : lista) {
+            cbbActual.addActionListener(al);
+        }
     }
 }

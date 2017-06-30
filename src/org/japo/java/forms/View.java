@@ -18,7 +18,6 @@ package org.japo.java.forms;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import org.japo.java.controllers.Controller;
-import org.japo.java.controllers.EventsController;
 import org.japo.java.entities.Model;
 
 /**
@@ -30,7 +29,6 @@ public class View extends javax.swing.JFrame {
     // Referencias 
     private Model model;
     private Controller control;
-    private EventsController eventsControl;
 
     // Constructor
     public View() {
@@ -52,9 +50,6 @@ public class View extends javax.swing.JFrame {
         // Generar Controlador
         control = new Controller(model, this);
 
-        // Referencia al Controlador de Eventos
-        eventsControl = control.getEventsControl();
-
         // Restaurar Estado Previo
         control.restaurarEstadoApp();
 
@@ -67,8 +62,11 @@ public class View extends javax.swing.JFrame {
         URL urlICN = ClassLoader.getSystemResource("img/favicon.png");
         setIconImage(new ImageIcon(urlICN).getImage());
 
+//        // Escuchador Cambio Texto
+//        txfTexto.getDocument().addDocumentListener(new DEM(control));
+//
         // Modelo > Vista
-        control.sincronizarModeloVista();
+        control.sincronizarModeloVista(model, this);
 
         // Enfocar Control Inicial
         btnCargar.requestFocus();
@@ -102,6 +100,8 @@ public class View extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        pnlRotulo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rótulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
         lblRotulo.setBackground(java.awt.Color.white);
         lblRotulo.setFont(new java.awt.Font("Calibri", 0, 48)); // NOI18N
@@ -157,7 +157,7 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(spnTalla, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sldTalla, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(sldTalla, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlAjustesLayout.setVerticalGroup(
@@ -195,7 +195,7 @@ public class View extends javax.swing.JFrame {
         pnlControlesLayout.setHorizontalGroup(
             pnlControlesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlesLayout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(103, Short.MAX_VALUE)
                 .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,23 +243,23 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        eventsControl.procesarCierreVentana(evt);
+        control.procesarCierreVentana(evt);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        eventsControl.procesarImportacion(evt);
+        control.procesarImportacion(evt);
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        eventsControl.procesarExportacion(evt);
+        control.procesarExportacion(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void spnTallaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnTallaStateChanged
-        eventsControl.procesarTalla(evt);
+        control.procesarTalla(evt);
     }//GEN-LAST:event_spnTallaStateChanged
 
     private void sldTallaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldTallaStateChanged
-        eventsControl.procesarTalla(evt);
+        control.procesarTalla(evt);
     }//GEN-LAST:event_sldTallaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
