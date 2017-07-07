@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import org.japo.java.entities.Model;
-import org.japo.java.forms.View;
+import org.japo.java.view.View;
 import org.japo.java.lib.UtilesApp;
 import org.japo.java.lib.UtilesSwing;
 import org.japo.java.interfaces.IDAController;
