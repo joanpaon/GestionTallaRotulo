@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.japo.java.lib;
+package org.japo.java.libraries;
 
 import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 import javax.swing.JTextField;
 
 /**
@@ -27,26 +26,26 @@ import javax.swing.JTextField;
  */
 public class UtilesValidacion {
 
-    // Dato + ExpReg
+    // Dato + Expresión Regular
     public static boolean validarDato(String dato, String expReg) {
         // Semáforo de validación
-        boolean testOK;
+        boolean testOK = false;
 
+        // Realizar Validación
         try {
             // Patrón de la expresión regular
             Pattern patron = Pattern.compile(expReg);
 
-            // Detector del texto de prueba
+            // Detector Texto de Prueba
             Matcher detector = patron.matcher(dato);
 
-            // Coincidencia
+            // Averiguar Coincidencia
             testOK = detector.matches();
-        } catch (PatternSyntaxException pse) {
-            // ExpReg errónea - Depurar
-            testOK = false;
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
-        // Resultado de la validación
+        // Devolver Semáforo
         return testOK;
     }
 

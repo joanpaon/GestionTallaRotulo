@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.japo.java.entities;
+package org.japo.java.models;
 
 import java.io.Serializable;
-import org.japo.java.lib.UtilesValidacion;
+import org.japo.java.libraries.UtilesValidacion;
 
 /**
  *
@@ -41,17 +41,17 @@ public class Model implements Serializable {
     public static final int POS_FONDO_A = 10;
 
     // Expresiones regulares
-    public static final String ER_TEXTO = "[\\wáéíóúüñÁÉÍÓÚÜÑ ]+";
-    public static final String ER_FAMILIA = "[\\w ]+";
-    public static final String ER_NEGRITA = "true|false";
-    public static final String ER_CURSIVA = "true|false";
-    public static final String ER_TALLA = "[1-9]\\d|\\d|100";
-    public static final String ER_FRENTE_R = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
-    public static final String ER_FRENTE_V = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
-    public static final String ER_FRENTE_A = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
-    public static final String ER_FONDO_R = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
-    public static final String ER_FONDO_V = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
-    public static final String ER_FONDO_A = "25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d";
+    public static final String ER_TEXTO = "[\\wáéíóúÁÉÍÓÚüÜñÑ ]+";
+    public static final String ER_FAMILIA = "[\\wáéíóúÁÉÍÓÚüÜñÑ ]+";
+    public static final String ER_NEGRITA = "false|true";
+    public static final String ER_CURSIVA = "false|true";
+    public static final String ER_TALLA = "0|[1-9]\\d?|100";
+    public static final String ER_FRENTE_R = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
+    public static final String ER_FRENTE_V = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
+    public static final String ER_FRENTE_A = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
+    public static final String ER_FONDO_R = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
+    public static final String ER_FONDO_V = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
+    public static final String ER_FONDO_A = "0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]";
 
     // Valores por defecto
     public static final String DEF_TEXTO = "Texto de Prueba";

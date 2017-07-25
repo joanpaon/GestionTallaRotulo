@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.japo.java.view;
+package org.japo.java.views;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
+import java.util.Properties;
 import org.japo.java.controllers.Controller;
-import org.japo.java.entities.Model;
+import org.japo.java.libraries.UtilesApp;
+import org.japo.java.models.Model;
 
 /**
  *
@@ -26,52 +26,32 @@ import org.japo.java.entities.Model;
  */
 public class View extends javax.swing.JFrame {
 
+    // Fichero Propiedades
+    public static final String FICHERO = "view.properties";
+
     // Referencias 
     private Model model;
     private Controller control;
+    private Properties prpView;
 
     // Constructor
     public View() {
-        // Inicializar Vista - PREVIA
-        beforeInit();
+        // Inicializacion Anterior
+        initBefore();
 
-        // Construcción - Vista
+        // Creación Vista
         initComponents();
 
-        // Inicializar Vista - POSTERIOR
-        afterInit();
+        // Inicializacion Posterior
+        initAfter();
     }
 
-    // Inicializar Vista - PREVIA
-    private void beforeInit() {
-        // Generar Modelo
-        model = new Model();
-
-        // Generar Controlador
-        control = new Controller(model, this);
-
-        // Restaurar Estado Previo
-        control.restaurarEstadoApp();
-
-        // Otras inicializaciones
+    public Model getModel() {
+        return model;
     }
 
-    // Inicializar Vista - POSTERIOR
-    private void afterInit() {
-        // Icono Ventana - Recurso
-        URL urlICN = ClassLoader.getSystemResource("img/favicon.png");
-        setIconImage(new ImageIcon(urlICN).getImage());
-
-//        // Escuchador Cambio Texto
-//        txfTexto.getDocument().addDocumentListener(new DEM(control));
-//
-        // Modelo > Vista
-        control.sincronizarModeloVista(model, this);
-
-        // Enfocar Control Inicial
-        btnCargar.requestFocus();
-
-        // Otras inicializaciones
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     /**
@@ -89,8 +69,8 @@ public class View extends javax.swing.JFrame {
         spnTalla = new javax.swing.JSpinner();
         sldTalla = new javax.swing.JSlider();
         pnlControles = new javax.swing.JPanel();
-        btnCargar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
+        btnImportar = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Talla Rótulo");
@@ -174,19 +154,19 @@ public class View extends javax.swing.JFrame {
 
         pnlControles.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
-        btnCargar.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        btnCargar.setText("Cargar");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+        btnImportar.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        btnImportar.setText("Importar");
+        btnImportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
+                btnImportarActionPerformed(evt);
             }
         });
 
-        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnExportar.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        btnExportar.setText("Exportar");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnExportarActionPerformed(evt);
             }
         });
 
@@ -196,9 +176,9 @@ public class View extends javax.swing.JFrame {
             pnlControlesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlesLayout.createSequentialGroup()
                 .addContainerGap(103, Short.MAX_VALUE)
-                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(91, 91, 91))
         );
         pnlControlesLayout.setVerticalGroup(
@@ -206,8 +186,8 @@ public class View extends javax.swing.JFrame {
             .addGroup(pnlControlesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlControlesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCargar)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnImportar)
+                    .addComponent(btnExportar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -243,16 +223,16 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        control.procesarCierreVentana(evt);
+        control.procesarCierreVista(evt);
     }//GEN-LAST:event_formWindowClosing
 
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarActionPerformed
         control.procesarImportacion(evt);
-    }//GEN-LAST:event_btnCargarActionPerformed
+    }//GEN-LAST:event_btnImportarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         control.procesarExportacion(evt);
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_btnExportarActionPerformed
 
     private void spnTallaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnTallaStateChanged
         control.procesarTalla(evt);
@@ -263,8 +243,8 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_sldTallaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnExportar;
+    private javax.swing.JButton btnImportar;
     public javax.swing.JLabel lblRotulo;
     private javax.swing.JPanel pnlAjustes;
     private javax.swing.JPanel pnlControles;
@@ -273,11 +253,27 @@ public class View extends javax.swing.JFrame {
     public javax.swing.JSpinner spnTalla;
     // End of variables declaration//GEN-END:variables
 
-    public Model getModel() {
-        return model;
+    // Inicializacion Anterior
+    private void initBefore() {
+        // Crear Modelo
+        model = new Model();
+
+        // Crear Controlador
+        control = new Controller(model, this);
+
+        // Cargar Propiedades Vista
+        prpView = UtilesApp.cargarPropiedades(FICHERO);
+
+        // Restaurar Estado
+        control.restaurarEstadoVista(this, prpView);
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    // Inicializacion Posterior
+    private void initAfter() {
+        // Modelo > Vista
+        control.sincronizarModeloVista(model, this);
+
+        // Enfocar Control Inicial
+        btnImportar.requestFocus();
     }
 }

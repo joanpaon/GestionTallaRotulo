@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_131" class="java.beans.XMLDecoder">
- <object class="org.japo.java.entities.Model">
+ <object class="org.japo.java.models.Model">
   <void property="talla">
-   <int>89</int>
+   <int>18</int>
   </void>
  </object>
 </java>

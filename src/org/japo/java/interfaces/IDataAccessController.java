@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.japo.java.events;
+package org.japo.java.interfaces;
 
-import java.awt.event.KeyAdapter;
-import org.japo.java.controllers.Controller;
+import org.japo.java.models.Model;
 
 /**
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
+ *
  */
-public class KEM extends KeyAdapter {
+public interface IDataAccessController {
 
-    // Referencia al Controller
-    private final Controller control;
+    public void importarModelo(Model model, String fichero) throws Exception;
 
-    // Constructor
-    public KEM(Controller control) {
-        this.control = control;
-    }
+    public void exportarModelo(Model model, String fichero) throws Exception;
 }
