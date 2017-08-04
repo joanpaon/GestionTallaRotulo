@@ -106,7 +106,8 @@ public class Controller {
             }
         } else {
             // Mensaje - Validación Pendiente
-            JOptionPane.showMessageDialog(view, "Hay datos erróneos.");
+            String msg = "Hay datos erróneos";
+            JOptionPane.showMessageDialog(view, msg);
         }
     }
 
@@ -139,7 +140,7 @@ public class Controller {
         view.lblRotulo.setBackground(new Color(fondoR, fondoV, fondoA));
     }
 
-    // Vista (Subjetivo) > Modelo
+    // Vista (Subjetiva) > Modelo
     private void sincronizarVistaModelo(View view, Model model) {
 
     }
@@ -153,30 +154,16 @@ public class Controller {
     public void restaurarEstadoVista(View view, Properties prp) {
         // Establecer Favicon
         UtilesSwing.establecerFavicon(view, "img/favicon.png");
-    }
 
-    // Persistencia > Estado Actual
-    public void restaurarEstadoApp() {
         // Establece Lnf
-        UtilesSwing.establecerLnF(prpApp.getProperty("lnf", UtilesSwing.WINDOWS));
+        UtilesSwing.establecerLnF(prp.getProperty("lnf", UtilesSwing.WINDOWS));
 
         // Activa Singleton
-        if (!UtilesApp.activarInstancia(prpApp.getProperty("puerto_bloqueo", UtilesApp.PUERTO_BLOQUEO))) {
+        if (!UtilesApp.activarInstancia(prp.getProperty("puerto_bloqueo", UtilesApp.PUERTO_BLOQUEO))) {
             UtilesSwing.terminarPrograma(view);
         }
 
         // Activa otras propiedades
-    }
-
-    // Vista (Subjetivo) > Modelo
-    public void sincronizarVistaModelo(Model model, View view) {
-//        // Campo de Texto - Item 
-//        if (UtilesValidacion.validarDato(
-//            view.txfItem.getText(), Model.ER_ITEM)) {
-//            model.setItem(txfItem.getText());
-//        } else {
-//            model.setItem(Model.DEF_ITEM);
-//        }
     }
 
     // Procesar Cambio de Texto
@@ -215,9 +202,9 @@ public class Controller {
 //        sincronizarModeloVista(model, view);
     }
 
-    // Cambiar Tamaño de Fuente
+    // Cambiar Tamaño Fuente
     public void procesarTalla(ChangeEvent evt) {
-        // Vista > Modelo
+        // Control > Modelo
         if (evt.getSource().equals(view.sldTalla)) {
             model.setTalla(view.sldTalla.getValue());
         } else {

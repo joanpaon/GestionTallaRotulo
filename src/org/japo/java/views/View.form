@@ -32,8 +32,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlRotulo" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="pnlAjustes" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="pnlControles" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlAjuste" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlControl" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -45,9 +45,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlRotulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlAjustes" min="-2" max="-2" attributes="0"/>
+              <Component id="pnlAjuste" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlControles" min="-2" max="-2" attributes="0"/>
+              <Component id="pnlControl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -112,7 +112,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlAjustes">
+    <Container class="javax.swing.JPanel" name="pnlAjuste">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -182,7 +182,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlControles">
+    <Container class="javax.swing.JPanel" name="pnlControl">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">

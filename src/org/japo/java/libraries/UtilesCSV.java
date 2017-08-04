@@ -17,8 +17,8 @@ package org.japo.java.libraries;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintWriter;
+import org.japo.java.models.Model;
 
 /**
  *
@@ -30,7 +30,7 @@ public class UtilesCSV {
     public static final String SEPARADOR_LECTURA = "\\s*,\\s*";
     public static final String SEPARADOR_ESCRITURA = ", ";
 
-    // Archivo CSV > Lista Items
+    // Fichero CSV > Lista Items
     public static String[] importarItemsCSV(String fichero) throws Exception {
         // Lista Items (Vacio)
         String[] items;
@@ -48,16 +48,15 @@ public class UtilesCSV {
         return items;
     }
 
-    // Lista Items > Archivo CSV
+    // Lista Items > Fichero CSV
     public static void exportarItemsCSV(String[] items, String fichero) throws Exception {
-        // Lectura de un fichero de texto
-        try (PrintWriter salida = new PrintWriter(new FileWriter(fichero))) {
-
-            // Primer item por separado
+        // Exportar Items
+        try (PrintWriter salida = new PrintWriter(fichero)) {
+            // Primer Item - Separado
             salida.print(items[0]);
 
-            // Resto de los items
-            for (int i = 1; i < items.length; i++) {
+            // Resto Items
+            for (int i = 1; i < Model.NUM_ITEMS; i++) {
                 salida.print(SEPARADOR_ESCRITURA + items[i]);
             }
         }

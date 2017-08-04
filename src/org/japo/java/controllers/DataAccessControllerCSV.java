@@ -49,7 +49,7 @@ public class DataAccessControllerCSV implements IDataAccessController {
     }
 
     // Modelo > Lista Items
-    public void convertirModeloArray(Model model, String[] items) {
+    private void convertirModeloArray(Model model, String[] items) {
         items[Model.POS_TEXTO] = model.getTexto();
         items[Model.POS_FAMILIA] = model.getFamilia();
         items[Model.POS_NEGRITA] = model.isNegrita() + "";
@@ -64,7 +64,7 @@ public class DataAccessControllerCSV implements IDataAccessController {
     }
 
     // Lista Items > Modelo
-    public void convertirArrayModelo(String[] items, Model model) {
+    private void convertirArrayModelo(String[] items, Model model) {
         // Texto
         model.setTexto(items[Model.POS_TEXTO]);
 
